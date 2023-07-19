@@ -25,6 +25,7 @@
       <itemPath>input_output.c</itemPath>
       <itemPath>pid.c</itemPath>
       <itemPath>interrupt_isr.c</itemPath>
+      <itemPath>oled.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -686,6 +687,8 @@
         <property key="periphComp5.gte" value="gt"/>
         <property key="periphComp6.gte" value="gt"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Users/bille/OneDrive/Documents/workspace/Microchip/test4550.X/debug/default/test4550_ptg"/>
         <property key="programmerToGoImageName" value="test4550_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
@@ -1216,8 +1219,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-7fff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/Users/bille/OneDrive/Documents/workspace/Microchip/test4550.X/debug/default/test4550_ptg"/>
         <property key="programmerToGoImageName" value="test4550_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
@@ -1248,6 +1249,8 @@
                   value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value="5.0"/>
       </pk4hybrid>
+      <item path="u8g2/ssd1306.c" ex="true" overriding="false">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

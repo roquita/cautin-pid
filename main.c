@@ -146,6 +146,11 @@ void main(void) {
                 float cautin_temperature = io_get_cautin_temperature_from_ADC();
                 uint8_t duty = pid_execute(cautin_temperature);
                 io_set_cautin_duty_cycle_PWM(duty);
+/*
+                char a[50];
+                snprintf(a, sizeof (a), "%.2f,%.2f\r", pid_get_setpoint(), cautin_temperature);
+                software_uart_print_string(a);
+*/
             } else {
                 pid_reset();
                 io_set_cautin_duty_cycle_PWM(0);
