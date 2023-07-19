@@ -89,7 +89,7 @@
  * RB2 - entrada A encoder
  * RB3 - entrada B encoder
  * RB4 - boton encoder
- 
+ * RA3 - boton ON
  */
 
 void main(void) {
@@ -102,38 +102,55 @@ void main(void) {
 
     uint32_t screen_countMS = 0;
     uint32_t pid_countMS = 0;
+
+    io_encoder_load_setpoint();
+    pid_set_setpoint(io_get_setpoint_from_ENCODER());
+    screen_set_temperature_setpoint(io_get_setpoint_from_ENCODER());
+
     while (1) {
 
-        io_encoder_loop();
+        if (io_encoder_module_is_working()) {
+            io_encoder_loop();
+        }
 
-        if (io_encoder_button_is_pressed()) {
+        if (io_encoder_button_is_pressed() && pid_module_is_working()) {
             pid_set_setpoint(io_get_setpoint_from_ENCODER());
+            screen_set_temperature_setpoint(io_get_setpoint_from_ENCODER());
+            io_encoder_save_setpoint();
+        }
+
+        if (io_onoff_button_is_pressed()) {
+            __delay_ms(500);
+            pid_toogle_module_status();
+            screen_toogle_module_status();
+            io_encoder_toogle_module_status();
         }
 
         if (systimer_get_ms() - screen_countMS >= SCREEN_REFRESH_PERIOD_MS) {
             screen_countMS = systimer_get_ms();
 
             // TODO EVERY 1s
-            screen_set_battery_status(io_get_battery_status_from_GPIO());
-            screen_set_temperature_setpoint(io_get_setpoint_from_ENCODER());
-            screen_set_temperature_cautin(io_get_cautin_temperature_from_ADC());
-
-            //screen_update();
+            if (screen_module_is_working()) {
+                screen_set_battery_status(io_get_battery_status_from_GPIO());
+                screen_set_temperature_setpoint(io_get_setpoint_from_ENCODER());
+                screen_set_temperature_cautin(io_get_cautin_temperature_from_ADC());
+                screen_update();
+            }
         }
 
         if (systimer_get_ms() - pid_countMS >= PID_REFRESH_PERIOD_MS) {
             pid_countMS = systimer_get_ms();
 
             // TODO EVERY 50ms
-            float cautin_temperature = io_get_cautin_temperature_from_ADC();
-            uint8_t duty = pid_execute(cautin_temperature);
-            io_set_cautin_duty_cycle_PWM(duty);
-
-            char txt[50];
-            snprintf(txt, sizeof (txt), "%.2f,%.2f\r", pid_get_setpoint(), cautin_temperature);
-            software_uart_print_string(txt);
+            if (pid_module_is_working()) {
+                float cautin_temperature = io_get_cautin_temperature_from_ADC();
+                uint8_t duty = pid_execute(cautin_temperature);
+                io_set_cautin_duty_cycle_PWM(duty);
+            } else {
+                pid_reset();
+                io_set_cautin_duty_cycle_PWM(0);
+            }
         }
-
 
     }
     return;

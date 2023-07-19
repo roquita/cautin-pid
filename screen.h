@@ -12,7 +12,6 @@
 #include "project_defines.h"
 
 
-
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -24,6 +23,8 @@ extern "C" {
     void screen_set_temperature_setpoint(float f);
     void screen_set_temperature_cautin(float f);
     float screen_get_temperature_cautin(void);
+    void screen_toogle_module_status(void);
+    bool screen_module_is_working(void);
 
 #ifdef	__cplusplus
 }

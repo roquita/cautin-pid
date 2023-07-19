@@ -20,10 +20,14 @@ extern "C" {
     battery_status_t io_get_battery_status_from_GPIO(void);
     float io_get_cautin_temperature_from_ADC(void);
     void io_set_cautin_duty_cycle_PWM(uint8_t duty);
+    void io_encoder_toogle_module_status(void);
+    bool io_encoder_module_is_working(void);
     void io_encoder_loop(void);
     float io_get_setpoint_from_ENCODER(void);
     bool io_encoder_button_is_pressed(void);
-
+    void io_encoder_save_setpoint(void);
+    void io_encoder_load_setpoint(void);
+    bool io_onoff_button_is_pressed(void);
 
 #ifdef	__cplusplus
 }
