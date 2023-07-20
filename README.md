@@ -1,5 +1,7 @@
 # cautin-pid
 
+Control de temperatura para cautín.
+
 - Modelo cautín: 907A
 - MPLABX version: v6.1
 - PIC18Fxxxx_DFP version: 1.4.151
